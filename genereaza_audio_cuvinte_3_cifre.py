@@ -3,11 +3,12 @@ import os
 import zipfile
 
 cuvinte = [
-    "12", "37", "45", "83", "96", "54", "71", "68", "29", "77",
-    "64", "88", "19", "42", "31", "99", "21", "73", "56", "62",
-    "84", "28", "39", "47", "58", "93", "15", "26", "35", "48",
-    "67", "74", "91", "33", "53", "27", "86", "95", "44", "81"
+    "127", "384", "592", "641", "713", "859", "904", "276", "318", "457",
+    "682", "795", "234", "369", "421", "578", "693", "842", "915", "367",
+    "102", "289", "345", "436", "527", "618", "729", "803", "954", "687",
+    "111", "222", "333", "444", "555", "666", "777", "888", "999", "123"
 ]
+
 
 # Director de lucru
 output_dir = "cuvinte_audio"
@@ -29,7 +30,7 @@ with open(mapping_path, "w", encoding="utf-8") as mapping_file:
         print(f"Generat: {file_name} ({cuv})")
 
 # Creăm arhiva ZIP
-zip_path = "genereaza_audio_cuvinte_2_cifre.zip"
+zip_path = "genereaza_audio_cuvinte_3_cifre.zip"
 with zipfile.ZipFile(zip_path, 'w') as zipf:
     for file in file_paths:
         zipf.write(file, os.path.basename(file))
