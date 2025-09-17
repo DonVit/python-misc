@@ -1,14 +1,16 @@
 from gtts import gTTS
 import os
 import zipfile
-import uuid
 
-# Lista de 40 cuvinte populare în română (4 litere fiecare)
 cuvinte = [
-    "apa", "mai", "era", "rau", "nou", "dar", "jos", "sus", "azi", "are",
-    "voi", "tie", "mie", "noi", "ele", "ea", "el", "un", "doi", "tre",
-    "bun", "dor", "nor", "sat", "bar", "nas", "cer", "mic", "cat", "tot",
-    "cum", "cui", "aia", "azi", "iar", "ora", "foc", "vin", "zic", "pat"
+    "mare", "mică", "casă", "drum", "cald",
+    "rece", "bine", "lupă", "luna", "noră",
+    "tată", "mamă", "fată", "jocă", "lamp",
+    "zori", "floi", "vale", "nori", "vânt",
+    "pasă", "port", "fior", "glas", "zbor",
+    "cale", "stea", "roti", "pasu", "nava",
+    "meni", "roșu", "plaj", "ceas", "pâna",
+    "roda", "flor", "rana", "brad", "bani"
 ]
 
 
@@ -16,23 +18,23 @@ cuvinte = [
 output_dir = "cuvinte_audio"
 os.makedirs(output_dir, exist_ok=True)
 
-# Fișier de mapare cuvânt → nume random
+# Fișier de mapare cuvânt → nume increment
 mapping_path = os.path.join(output_dir, "mapping.txt")
 with open(mapping_path, "w", encoding="utf-8") as mapping_file:
     file_paths = []
-    for cuv in cuvinte:
-        random_name = f"{uuid.uuid4().hex[:8]}.mp3"
-        file_path = os.path.join(output_dir, random_name)
-        
+    for idx, cuv in enumerate(cuvinte, start=1):
+        file_name = f"{idx}.mp3"
+        file_path = os.path.join(output_dir, file_name)
+
         tts = gTTS(cuv, lang="ro", slow=False)
         tts.save(file_path)
         file_paths.append(file_path)
 
-        mapping_file.write(f"{random_name} -> {cuv}\n")
-        print(f"Generat: {random_name} ({cuv})")
+        mapping_file.write(f"{file_name} -> {cuv}\n")
+        print(f"Generat: {file_name} ({cuv})")
 
 # Creăm arhiva ZIP
-zip_path = "cuvinte_romana_random.zip"
+zip_path = "genereaza_audio_cuvinte_4_litere.zip"
 with zipfile.ZipFile(zip_path, 'w') as zipf:
     for file in file_paths:
         zipf.write(file, os.path.basename(file))
